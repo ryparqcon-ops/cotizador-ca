@@ -1,28 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "splash-screen.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "web-version.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/splash-screen.html"
-    },
-    {
-      "src": "/app",
-      "dest": "/web-version.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+  "rewrites": [
+    { "source": "/", "destination": "/splash-screen.html" },
+    { "source": "/app", "destination": "/web-version.html" }
   ],
   "headers": [
     {
@@ -39,10 +18,6 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=1, stale-while-revalidate"
         }
       ]
     },
@@ -52,10 +27,6 @@
         {
           "key": "Content-Type",
           "value": "application/manifest+json"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000"
         }
       ]
     },
@@ -65,19 +36,6 @@
         {
           "key": "Content-Type",
           "value": "application/javascript"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/icons/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000"
         }
       ]
     }
