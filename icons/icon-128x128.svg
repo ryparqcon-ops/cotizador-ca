@@ -1,0 +1,33 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="houseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="128" height="128" rx="19.2" fill="url(#bgGradient)"/>
+  
+  <g transform="translate(64, 64)">
+    <path d="M-19.2,-15.36 L0,-30.72 L19.2,-15.36 L19.2,10.24 L-19.2,10.24 Z" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.512"/>
+    <rect x="-19.2" y="10.24" width="38.4" height="20.48" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.512"/>
+    <rect x="-5.12" y="15.36" width="10.24" height="15.36" fill="#667eea" rx="1.024"/>
+    <circle cx="-1.28" cy="23.04" r="0.768" fill="url(#houseGradient)"/>
+    <rect x="-15.36" y="12.8" width="6.4" height="6.4" fill="#667eea" rx="0.512"/>
+    <rect x="8.96" y="12.8" width="6.4" height="6.4" fill="#667eea" rx="0.512"/>
+    <rect x="-15.36" y="12.8" width="6.4" height="6.4" fill="none" stroke="url(#houseGradient)" stroke-width="0.256"/>
+    <rect x="8.96" y="12.8" width="6.4" height="6.4" fill="none" stroke="url(#houseGradient)" stroke-width="0.256"/>
+  </g>
+  
+  <g transform="translate(0, 99.84)">
+    <path d="M0,12.8 Q12.8,7.68 25.6,12.8 T51.2,12.8 T76.8,12.8 T102.4,12.8 T128,12.8 L128,28.16 L0,28.16 Z" fill="rgba(255,255,255,0.3)"/>
+  </g>
+  
+  <circle cx="104.96" cy="25.6" r="7.68" fill="#fbbf24" opacity="0.9"/>
+  
+  <text x="64" y="89.6" font-family="Arial, sans-serif" font-size="15.36" font-weight="bold" text-anchor="middle" fill="url(#houseGradient)">CA</text>
+</svg>

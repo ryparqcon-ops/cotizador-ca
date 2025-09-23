@@ -1,0 +1,33 @@
+<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="houseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="96" height="96" rx="14.399999999999999" fill="url(#bgGradient)"/>
+  
+  <g transform="translate(48, 48)">
+    <path d="M-14.399999999999999,-11.52 L0,-23.04 L14.399999999999999,-11.52 L14.399999999999999,7.68 L-14.399999999999999,7.68 Z" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.384"/>
+    <rect x="-14.399999999999999" y="7.68" width="28.799999999999997" height="15.36" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.384"/>
+    <rect x="-3.84" y="11.52" width="7.68" height="11.52" fill="#667eea" rx="0.768"/>
+    <circle cx="-0.96" cy="17.28" r="0.5760000000000001" fill="url(#houseGradient)"/>
+    <rect x="-11.52" y="9.600000000000001" width="4.800000000000001" height="4.800000000000001" fill="#667eea" rx="0.384"/>
+    <rect x="6.720000000000001" y="9.600000000000001" width="4.800000000000001" height="4.800000000000001" fill="#667eea" rx="0.384"/>
+    <rect x="-11.52" y="9.600000000000001" width="4.800000000000001" height="4.800000000000001" fill="none" stroke="url(#houseGradient)" stroke-width="0.192"/>
+    <rect x="6.720000000000001" y="9.600000000000001" width="4.800000000000001" height="4.800000000000001" fill="none" stroke="url(#houseGradient)" stroke-width="0.192"/>
+  </g>
+  
+  <g transform="translate(0, 74.88)">
+    <path d="M0,9.600000000000001 Q9.600000000000001,5.76 19.200000000000003,9.600000000000001 T38.400000000000006,9.600000000000001 T57.599999999999994,9.600000000000001 T76.80000000000001,9.600000000000001 T96,9.600000000000001 L96,21.12 L0,21.12 Z" fill="rgba(255,255,255,0.3)"/>
+  </g>
+  
+  <circle cx="78.72" cy="19.200000000000003" r="5.76" fill="#fbbf24" opacity="0.9"/>
+  
+  <text x="48" y="67.19999999999999" font-family="Arial, sans-serif" font-size="11.52" font-weight="bold" text-anchor="middle" fill="url(#houseGradient)">CA</text>
+</svg>

@@ -2,17 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Casa Austin">
     <title>Consulta de Disponibilidad</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/daterangepicker.css">
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/mobile-fix.css">
 </head>
 <body>
     <div class="container">
         <h2 class="text-center">Consulta de Disponibilidad</h2>
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                 <div class="form-group">
                     <label for="fechas">Seleccione un rango de fechas:</label>
                     <input type="text" class="form-control" id="fechas" name="fechas" autocomplete="off">
@@ -168,17 +173,27 @@
             if (aplicarDescuentoTotal) data.dsct_total = porcentajeDescuento;
 
             try {
-                const response = await window.api.consultarDisponibilidad(data);
-                console.log('Respuesta recibida:', response);
+                const params = new URLSearchParams({
+                    start_date: data.start_date,
+                    end_date: data.end_date,
+                    num_personas: data.num_personas,
+                    tipo_cambio: data.tipo_cambio,
+                    detalles_disponibilidad: 1,
+                    _t: Date.now()
+                });
+                
+                const response = await fetch(`https://casaaustin.pe/api/landing-precios.php?${params}`);
+                const responseData = await response.json();
+                console.log('Respuesta recibida:', responseData);
                 $('.loading').hide();
 
-                if (response.error) {
-                    $('#textoResultado').val('Hubo un error: ' + response.error);
+                if (responseData.error) {
+                    $('#textoResultado').val('Hubo un error: ' + responseData.error);
                     $('#resultadoContainer').show();
                     return;
                 }
 
-                let respObj = response;
+                let respObj = responseData;
                 if (typeof response === "string") {
                     try {
                         respObj = JSON.parse(response);
@@ -306,8 +321,17 @@
                     detalles_disponibilidad: 1
                 };
                 
-                const responseAnterior = await window.api.consultarDisponibilidad(dataAnterior);
-                const respAnterior = responseAnterior;
+                const paramsAnterior = new URLSearchParams({
+                    start_date: dataAnterior.start_date,
+                    end_date: dataAnterior.end_date,
+                    num_personas: dataAnterior.num_personas,
+                    tipo_cambio: dataAnterior.tipo_cambio,
+                    detalles_disponibilidad: 1,
+                    _t: Date.now()
+                });
+                
+                const responseAnterior = await fetch(`https://casaaustin.pe/api/landing-precios.php?${paramsAnterior}`);
+                const respAnterior = await responseAnterior.json();
                 
                 if (respAnterior.estadoDisponibilidad === 1) {
                     const preciosAnterior = respAnterior.message2 ? respAnterior.message2.trim() : "";
@@ -333,8 +357,17 @@
                     detalles_disponibilidad: 1
                 };
                 
-                const responsePosterior = await window.api.consultarDisponibilidad(dataPosterior);
-                const respPosterior = responsePosterior;
+                const paramsPosterior = new URLSearchParams({
+                    start_date: dataPosterior.start_date,
+                    end_date: dataPosterior.end_date,
+                    num_personas: dataPosterior.num_personas,
+                    tipo_cambio: dataPosterior.tipo_cambio,
+                    detalles_disponibilidad: 1,
+                    _t: Date.now()
+                });
+                
+                const responsePosterior = await fetch(`https://casaaustin.pe/api/landing-precios.php?${paramsPosterior}`);
+                const respPosterior = await responsePosterior.json();
                 
                 if (respPosterior.estadoDisponibilidad === 1) {
                     const preciosPosterior = respPosterior.message2 ? respPosterior.message2.trim() : "";

@@ -1,0 +1,57 @@
+/* Fix para móvil - CSS específico */
+@media (max-width: 768px) {
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    padding: 5px !important;
+    margin: 0 !important;
+  }
+  
+  .container {
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  
+  .container h2 {
+    background: white !important;
+    color: black !important;
+    padding: 20px 15px !important;
+    margin: 0 !important;
+  }
+  
+  .row {
+    background: white !important;
+    padding: 15px !important;
+    margin: 0 !important;
+  }
+  
+  .form-group {
+    background: white !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .form-control, .custom-input {
+    background: white !important;
+    border: 2px solid #d1d5db !important;
+    color: black !important;
+  }
+  
+  .btn {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    border: none !important;
+  }
+  
+  .form-check-label {
+    color: black !important;
+  }
+  
+  #textoResultado {
+    background: white !important;
+    color: black !important;
+    border: 2px solid #d1d5db !important;
+  }
+}

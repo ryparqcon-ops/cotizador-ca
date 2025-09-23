@@ -1,0 +1,33 @@
+<svg width="144" height="144" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="houseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="144" height="144" rx="21.599999999999998" fill="url(#bgGradient)"/>
+  
+  <g transform="translate(72, 72)">
+    <path d="M-21.599999999999998,-17.28 L0,-34.56 L21.599999999999998,-17.28 L21.599999999999998,11.52 L-21.599999999999998,11.52 Z" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.5760000000000001"/>
+    <rect x="-21.599999999999998" y="11.52" width="43.199999999999996" height="23.04" fill="url(#houseGradient)" stroke="#e5e7eb" stroke-width="0.5760000000000001"/>
+    <rect x="-5.76" y="17.28" width="11.52" height="17.28" fill="#667eea" rx="1.1520000000000001"/>
+    <circle cx="-1.44" cy="25.919999999999998" r="0.864" fill="url(#houseGradient)"/>
+    <rect x="-17.28" y="14.4" width="7.2" height="7.2" fill="#667eea" rx="0.5760000000000001"/>
+    <rect x="10.080000000000002" y="14.4" width="7.2" height="7.2" fill="#667eea" rx="0.5760000000000001"/>
+    <rect x="-17.28" y="14.4" width="7.2" height="7.2" fill="none" stroke="url(#houseGradient)" stroke-width="0.28800000000000003"/>
+    <rect x="10.080000000000002" y="14.4" width="7.2" height="7.2" fill="none" stroke="url(#houseGradient)" stroke-width="0.28800000000000003"/>
+  </g>
+  
+  <g transform="translate(0, 112.32000000000001)">
+    <path d="M0,14.4 Q14.4,8.64 28.8,14.4 T57.6,14.4 T86.39999999999999,14.4 T115.2,14.4 T144,14.4 L144,31.68 L0,31.68 Z" fill="rgba(255,255,255,0.3)"/>
+  </g>
+  
+  <circle cx="118.08" cy="28.8" r="8.64" fill="#fbbf24" opacity="0.9"/>
+  
+  <text x="72" y="100.8" font-family="Arial, sans-serif" font-size="17.28" font-weight="bold" text-anchor="middle" fill="url(#houseGradient)">CA</text>
+</svg>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convertidor SVG a PNG - Casa Austin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .download-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .download-btn:hover {
+            background: #5a6fd8;
+        }
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Convertidor SVG a PNG - Casa Austin</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones:</h3>
+            <ol>
+                <li>Haz clic en "Convertir a PNG" para generar todos los iconos PNG</li>
+                <li>Descarga cada icono haciendo clic en "Descargar"</li>
+                <li>Guarda los iconos PNG en la carpeta <code>icons/</code></li>
+                <li>Los iconos se generan automáticamente con alta calidad</li>
+            </ol>
+        </div>
+
+        <button class="download-btn" onclick="convertAllToPNG()">🔄 Convertir a PNG</button>
+        <button class="download-btn" onclick="downloadAllPNG()">📦 Descargar Todos PNG</button>
+
+        <div id="icons-container"></div>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        let generatedPNGs = {};
+
+        function createIconSVG(size) {
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="houseGradient${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="${size}" height="${size}" rx="${size * 0.15}" fill="url(#bgGradient${size})"/>
+  
+  <g transform="translate(${size/2}, ${size/2})">
+    <path d="M-${size*0.15},-${size*0.12} L0,-${size*0.24} L${size*0.15},-${size*0.12} L${size*0.15},${size*0.08} L-${size*0.15},${size*0.08} Z" fill="url(#houseGradient${size})" stroke="#e5e7eb" stroke-width="${size*0.004}"/>
+    <rect x="-${size*0.15}" y="${size*0.08}" width="${size*0.3}" height="${size*0.16}" fill="url(#houseGradient${size})" stroke="#e5e7eb" stroke-width="${size*0.004}"/>
+    <rect x="-${size*0.04}" y="${size*0.12}" width="${size*0.08}" height="${size*0.12}" fill="#667eea" rx="${size*0.008}"/>
+    <circle cx="-${size*0.01}" cy="${size*0.18}" r="${size*0.006}" fill="url(#houseGradient${size})"/>
+    <rect x="-${size*0.12}" y="${size*0.1}" width="${size*0.05}" height="${size*0.05}" fill="#667eea" rx="${size*0.004}"/>
+    <rect x="${size*0.07}" y="${size*0.1}" width="${size*0.05}" height="${size*0.05}" fill="#667eea" rx="${size*0.004}"/>
+    <rect x="-${size*0.12}" y="${size*0.1}" width="${size*0.05}" height="${size*0.05}" fill="none" stroke="url(#houseGradient${size})" stroke-width="${size*0.002}"/>
+    <rect x="${size*0.07}" y="${size*0.1}" width="${size*0.05}" height="${size*0.05}" fill="none" stroke="url(#houseGradient${size})" stroke-width="${size*0.002}"/>
+  </g>
+  
+  <g transform="translate(0, ${size*0.78})">
+    <path d="M0,${size*0.1} Q${size*0.1},${size*0.06} ${size*0.2},${size*0.1} T${size*0.4},${size*0.1} T${size*0.6},${size*0.1} T${size*0.8},${size*0.1} T${size},${size*0.1} L${size},${size*0.22} L0,${size*0.22} Z" fill="rgba(255,255,255,0.3)"/>
+  </g>
+  
+  <circle cx="${size*0.82}" cy="${size*0.2}" r="${size*0.06}" fill="#fbbf24" opacity="0.9"/>
+  
+  <text x="${size/2}" y="${size*0.7}" font-family="Arial, sans-serif" font-size="${size*0.12}" font-weight="bold" text-anchor="middle" fill="url(#houseGradient${size})">CA</text>
+</svg>`;
+        }
+
+        function convertAllToPNG() {
+            const container = document.getElementById('icons-container');
+            container.innerHTML = '';
+
+            sizes.forEach(size => {
+                const svgString = createIconSVG(size);
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                // Crear imagen desde SVG
+                const img = new Image();
+                const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(svgBlob);
+
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, size, size);
+                    URL.revokeObjectURL(url);
+
+                    // Crear elemento de vista previa
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'icon-preview';
+                    iconDiv.innerHTML = `
+                        <h4>${size}x${size}px</h4>
+                        <img src="${canvas.toDataURL()}" alt="Icon ${size}x${size}">
+                        <br>
+                        <button class="download-btn" onclick="downloadPNG(${size})">Descargar PNG</button>
+                    `;
+                    container.appendChild(iconDiv);
+
+                    generatedPNGs[size] = canvas;
+                };
+
+                img.src = url;
+            });
+        }
+
+        function downloadPNG(size) {
+            const canvas = generatedPNGs[size];
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAllPNG() {
+            sizes.forEach(size => {
+                if (generatedPNGs[size]) {
+                    setTimeout(() => downloadPNG(size), size * 10);
+                }
+            });
+        }
+
+        // Convertir automáticamente al cargar
+        window.onload = convertAllToPNG;
+    </script>
+</body>
+</html>
