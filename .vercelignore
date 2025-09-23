@@ -1,0 +1,32 @@
+# Excluir archivos pesados del despliegue Vercel
+node_modules/
+dist/
+build/
+Casas austin/
+main/
+*.exe
+*.dmg
+*.blockmap
+
+# Archivos de desarrollo
+generate-icons.html
+convert-to-png.html
+create-icons.js
+test-electron.js
+deploy.sh
+
+# Logs y temporales
+*.log
+logs/
+tmp/
+temp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
