@@ -1,9 +1,0 @@
-# Excluir solo archivos pesados
-node_modules/
-dist/
-build/
-Casas austin/
-main/
-*.exe
-*.dmg
-*.blockmap

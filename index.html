@@ -7,7 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Casa Austin">
-    <title>Consulta de Disponibilidad</title>
+    <title>Casa Austin - Consulta de Disponibilidad</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/daterangepicker.css">
     <link rel="stylesheet" href="styles/style.css">
@@ -91,6 +93,55 @@
     <script src="assets/moment.min.js"></script>
     <script src="assets/es.min.js"></script>
     <script src="assets/daterangepicker.min.js"></script>
+    
+    <script>
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registrado exitosamente:', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW falló al registrarse:', registrationError);
+                    });
+            });
+        }
+
+        // Mostrar prompt de instalación PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Mostrar botón de instalación
+            const installBtn = document.createElement('button');
+            installBtn.innerHTML = '📱 Instalar App';
+            installBtn.className = 'btn btn-success btn-block';
+            installBtn.style.marginTop = '10px';
+            installBtn.onclick = () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Usuario aceptó la instalación');
+                    }
+                    deferredPrompt = null;
+                });
+            };
+            document.querySelector('.container .row').appendChild(installBtn);
+        });
+
+        // Detectar si la app está instalada
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('App instalada exitosamente');
+            // Ocultar botón de instalación
+            const installBtn = document.querySelector('button[onclick*="deferredPrompt"]');
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+        });
+    </script>
+    
     <script>
         $(document).ready(function () {
             moment.locale('es');
@@ -173,6 +224,7 @@
             if (aplicarDescuentoTotal) data.dsct_total = porcentajeDescuento;
 
             try {
+                // Consumir el API real
                 const params = new URLSearchParams({
                     start_date: data.start_date,
                     end_date: data.end_date,
@@ -183,8 +235,9 @@
                 });
                 
                 const response = await fetch(`https://casaaustin.pe/api/landing-precios.php?${params}`);
+                
                 const responseData = await response.json();
-                console.log('Respuesta recibida:', responseData);
+                console.log('Respuesta del API:', responseData);
                 $('.loading').hide();
 
                 if (responseData.error) {
@@ -194,16 +247,6 @@
                 }
 
                 let respObj = responseData;
-                if (typeof response === "string") {
-                    try {
-                        respObj = JSON.parse(response);
-                    } catch (e) {
-                        $('#textoResultado').val('Respuesta inválida del servidor.');
-                        $('#resultadoContainer').show();
-                        return;
-                    }
-                }
-
                 const resultadoContainer = $('#resultadoContainer');
                 const resultadoTexto = $('#textoResultado');
                 const btnFlotante = $('#btnCopiarFlotante');
@@ -212,19 +255,7 @@
                 const endDateFormatted = moment(fechaFin).format('dddd D [de] MMMM');
                 let mensaje = "";
                 let precios = respObj.message2 ? respObj.message2.trim() : "";
-                
-                // Convertir precios USD a soles si es necesario
-                if (precios && tipoCambio) {
-                    // Buscar patrones de precios USD y convertirlos a soles
-                    precios = precios.replace(/\$(\d+)\s*USD/g, (match, precioUSD) => {
-                        const precioSoles = Math.round(parseInt(precioUSD) * tipoCambio);
-                        return `S/ ${precioSoles} ($${precioUSD} USD)`;
-                    });
-                }
                 const fotosLink = `https://casaaustin.pe/disponibilidad?checkIn=${fechaInicio}&checkOut=${fechaFin}`;
-                const notaCasa1 = "";
-                const notaImportante = "*IMPORTANTE: En Casa Austin, consideramos persona adicional a cualquier visitante, sin distinción si es por el día o la noche. Por favor, asegúrate de indicar el número exacto de personas que ingresarán a la casa.*";
-                const horario = "*HORARIO: Ingreso desde las 3 y salida es hasta las 11 a.m.*";
 
                 let casa1Disponible = false;
                 if (Array.isArray(respObj.casasDisponibles)) {
@@ -321,16 +352,10 @@
                     detalles_disponibilidad: 1
                 };
                 
-                const paramsAnterior = new URLSearchParams({
-                    start_date: dataAnterior.start_date,
-                    end_date: dataAnterior.end_date,
-                    num_personas: dataAnterior.num_personas,
-                    tipo_cambio: dataAnterior.tipo_cambio,
-                    detalles_disponibilidad: 1,
+                const responseAnterior = await fetch('https://casaaustin.pe/api/landing-precios.php?' + new URLSearchParams({
+                    ...dataAnterior,
                     _t: Date.now()
-                });
-                
-                const responseAnterior = await fetch(`https://casaaustin.pe/api/landing-precios.php?${paramsAnterior}`);
+                }));
                 const respAnterior = await responseAnterior.json();
                 
                 if (respAnterior.estadoDisponibilidad === 1) {
@@ -357,16 +382,10 @@
                     detalles_disponibilidad: 1
                 };
                 
-                const paramsPosterior = new URLSearchParams({
-                    start_date: dataPosterior.start_date,
-                    end_date: dataPosterior.end_date,
-                    num_personas: dataPosterior.num_personas,
-                    tipo_cambio: dataPosterior.tipo_cambio,
-                    detalles_disponibilidad: 1,
+                const responsePosterior = await fetch('https://casaaustin.pe/api/landing-precios.php?' + new URLSearchParams({
+                    ...dataPosterior,
                     _t: Date.now()
-                });
-                
-                const responsePosterior = await fetch(`https://casaaustin.pe/api/landing-precios.php?${paramsPosterior}`);
+                }));
                 const respPosterior = await responsePosterior.json();
                 
                 if (respPosterior.estadoDisponibilidad === 1) {
@@ -442,4 +461,3 @@
     </script>
 </body>
 </html>
-  
