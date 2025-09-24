@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/web-version.html" }
+  ],
   "headers": [
     {
       "source": "/manifest.json",
