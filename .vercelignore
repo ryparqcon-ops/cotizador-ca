@@ -1,8 +1,3 @@
 node_modules/
 dist/
 build/
-Casas austin/
-main/
-*.exe
-*.dmg
-*.blockmap
