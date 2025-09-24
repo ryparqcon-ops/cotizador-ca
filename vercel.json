@@ -1,7 +1,6 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/splash-screen.html" },
-    { "source": "/app", "destination": "/web-version.html" }
+    { "source": "/", "destination": "/web-version.html" }
   ],
   "headers": [
     {
